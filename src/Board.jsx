@@ -6,38 +6,34 @@ function Board(){
     const [board, setBoard] = useState(Array(9).fill(null));
     const [sign, setSign] = useState(true);
 
-    // make a state which will take care of not playing, playing, ended
-    const [isPlaying, setIsPlaying] = useState(0);
-
     function checkIfOver(newBoard){
         for(var i=0; i<3; i++){
             if(newBoard[i] && newBoard[i] === newBoard[i+3] && newBoard[i+3] === newBoard[i+6]){
-                setIsPlaying(2);
+                return true;
             }
         }   
         for(i=0; i<7; i+=3){
             if(newBoard[i] && newBoard[i] != null && newBoard[i] === newBoard[i+1] && newBoard[i+1] === newBoard[i+2]){
-                setIsPlaying(2);
+                return true;
             }
         }
         if(newBoard[0] && (newBoard[0] === newBoard[4] && newBoard[4] === newBoard[8])){   
-            setIsPlaying(2);
+            return true;
         }
         if(newBoard[2] && (newBoard[2] === newBoard[4] && newBoard[4] === newBoard[6])){
-            setIsPlaying(2);
+            return true;
         }
     }
 
     function handleBoard(i) {
         const newBoard = board.slice();
-        if(isPlaying === 2 || newBoard[i]) return;
+        if(checkIfOver(board) || newBoard[i]) return;
         if(sign)
             newBoard[i] = 'X';
         else 
             newBoard[i] = 'O';
         setSign(!sign);
         setBoard(newBoard);
-        checkIfOver(newBoard);
     }
     return (
         <>
