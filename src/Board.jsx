@@ -1,6 +1,6 @@
 import Square from "./Square"
 
-function Board({board, sign, onPlay}){
+function Board({board, curr, onPlay}){
     var winner;
     
     function checkIfOver(newBoard){
@@ -32,10 +32,10 @@ function Board({board, sign, onPlay}){
         if(checkIfOver(newBoard) || newBoard[i]) {
             return;
         }
-        if(sign)
-            newBoard[i] = 'X';
-        else 
+        if(curr%2)
             newBoard[i] = 'O';
+        else 
+            newBoard[i] = 'X';
         onPlay(newBoard);
     }
 
@@ -43,7 +43,7 @@ function Board({board, sign, onPlay}){
         <>
             {!checkIfOver(board) ?
                 (<div>
-                    Next Move : {sign === true ? 'X' : 'O'}
+                    Next Move : {curr%2 ? 'O' : 'X'}
                 </div>) : (
                     <div>
                         Winner : {winner}
